@@ -2,23 +2,28 @@
 #include <stdlib.h>
 
 void my_putchar(char c);
-void print_tree(int etages);
+void print_tree(int etages, int* ptraxe);
 int *draw_last_triangle(int etages);
+int get_axe(int etages);
 
 
 void tree(int etages)
 {
+    int axe = get_axe(etages);
+    int *ptraxe = &axe;
+    
     for (int i = 1; i <= etages; i++)
     {
         draw_last_triangle(i);
-        print_tree(i);
+       // print_spaces(i);
+        print_tree(i, ptraxe);
     }
     
 }
 
 int *draw_last_triangle(int etages)
 {
-    int *init = malloc(2*sizeof(int));
+    int *init = malloc(3*sizeof(int));
     int debut = 1;
     int lignes = 4; 
     int base = 7;
@@ -40,24 +45,26 @@ int *draw_last_triangle(int etages)
     
     init[0] = debut;
     init[1] = lignes;
+    init[2] = base;
     
     return (init);
 }
 
 
-void print_tree(int etages)
+void print_tree(int etages, int* ptraxe)
 {
     int *init = draw_last_triangle(etages); 
     int debut = init[0];
-    int lignes = init[1];   
+    int lignes = init[1];  
 
-
+printf("%d", *ptraxe);
     for (int i = 0; i < lignes; i++)
        {
-           for (int k = 0; k < lignes - i; k++) // nb d'espaces (- i a chaque etage pour reduire le nombre d'espace a chaque iteration)
+           for (int k = 0; k < *ptraxe + etages; k++) // 
             {
                 my_putchar(' ');
             }
+            (*ptraxe)--;
 
            for (int j = 0; j < debut; j++)  // afficher une etoile autant que la taille du debut
            {
@@ -66,4 +73,13 @@ void print_tree(int etages)
            my_putchar('\n');
            debut += 2; // incrementer début de 2 a chaque itération pour mettre 2 etoiles de plus a chaque etage
        }
+}
+
+int get_axe(int etages)
+{
+    int *init = draw_last_triangle(etages); 
+    int base = init[2];
+    int axe = (base/2);
+
+    return axe;
 }
