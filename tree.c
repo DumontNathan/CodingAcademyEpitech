@@ -6,12 +6,14 @@ void print_tree(int etages, int* ptraxe);
 int *draw_last_triangle(int etages);
 int get_axe(int etages);
 void print_trunk(int etages, int *ptraxe);
+int error_messages(int etages);
 
 void tree(int etages)
 {
+    error_messages(etages);
+
     int axe = get_axe(etages);
     int *ptraxe = &axe;
-    
     for (int i = 1; i <= etages; i++)
     {
         draw_last_triangle(i);
@@ -109,5 +111,19 @@ void print_trunk(int etages, int *ptraxe)
             my_putchar('|');
         }
         my_putchar('\n');     
+    }
+}
+
+int error_messages(int etages)
+{
+    if(etages < 0)
+    {
+        printf("Erreur ! Essayez avec une valeur positive (supérieure à 0) !\n");
+        return(84);
+    }
+    if(etages == 0)
+    {
+        printf("Erreur ! Essayez avec une valeur supérieure à 0 !\n");
+        return(84);
     }
 }
